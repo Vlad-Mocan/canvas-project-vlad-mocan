@@ -1,0 +1,144 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: #000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+}
+
+#canvas {
+  display: block;
+  background-color: #f8f8ff;
+  z-index: 1;
+}
+
+.information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  padding: 2rem 2rem 1rem 2rem;
+  border-radius: 1rem;
+  width: 200px;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.information.active {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.information h3 {
+  margin-bottom: 1rem;
+}
+
+.animation-btn {
+  border: none;
+  padding: 0.2rem 0.4rem;
+  cursor: pointer;
+  background-color: #000;
+  color: #f8f8ff;
+  transition: background-color 0.3s ease;
+
+  border-radius: 0.3rem;
+}
+
+.animation-btn:hover {
+  background-color: #4d4d4d;
+}
+
+/* .hidden {
+  opacity: 0;
+} */
+
+.menu-btn {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+
+  z-index: 2000;
+}
+
+.arrow-btn {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  position: absolute;
+  bottom: 2rem;
+  right: 50%;
+
+  transform: translate(-50%, 0);
+
+  z-index: 2000;
+
+  transition: transform 0.3s ease;
+}
+
+.arrow-btn.active {
+  transform: translateY(-200px) rotate(180deg);
+}
+
+.controls {
+  position: absolute;
+  bottom: 0;
+  background-color: #fff;
+  height: 200px;
+  width: 100%;
+  z-index: 1900;
+  visibility: hidden;
+  transform: translateY(100%);
+
+  transition: transform 0.3s ease;
+
+  padding: 2rem;
+}
+
+.controls.active {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.pause-all {
+  border: none;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  background-color: #000;
+  color: #f8f8ff;
+  transition: background-color 0.3s ease;
+
+  border-radius: 0.1rem;
+}
+
+.pause-all:hover {
+  background-color: #4d4d4d;
+}
+
+.configure-shapes {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#color-picker {
+  border: none;
+  background: transparent;
+  border-radius: 1rem;
+  width: 35px;
+}
