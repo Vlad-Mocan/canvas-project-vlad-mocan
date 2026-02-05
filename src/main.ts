@@ -15,6 +15,10 @@ const arrowButton = document.querySelector<HTMLButtonElement>(".arrow-btn")!;
 const controlsMenu = document.querySelector<HTMLDivElement>(".controls")!;
 const pauseAllAnimationsButton =
   document.querySelector<HTMLButtonElement>(".pause-all")!;
+const selectTypeInput =
+  document.querySelector<HTMLSelectElement>("#type-of-element")!;
+const colorPicker = document.querySelector<HTMLInputElement>("#color-picker")!;
+const radiusInput = document.querySelector<HTMLInputElement>("#radius-input")!;
 
 const ctx = canvas.getContext("2d")!;
 canvas.width = window.innerWidth;
@@ -44,11 +48,22 @@ let savedVelocityY = 2;
 const getElementSettings = () => {
   const shapeInput =
     document.querySelector<HTMLInputElement>("#type-of-element")!;
-  const colorInput = document.querySelector<HTMLInputElement>("#color-picker")!;
+
+  const defaultRadius = 12 + Math.random() * 18;
+
+  if (radiusInput.valueAsNumber > 300) {
+    radiusInput.valueAsNumber = 300;
+  } else if (
+    radiusInput.valueAsNumber < 1 ||
+    radiusInput.valueAsNumber === null
+  ) {
+    radiusInput.valueAsNumber = 1;
+  }
 
   return {
     shape: shapeInput.value,
-    colorInput: colorInput.value,
+    color: colorPicker.value || "#000",
+    radius: radiusInput.valueAsNumber || defaultRadius,
   };
 };
 
@@ -98,12 +113,9 @@ canvas.addEventListener("click", (e) => {
       return;
     }
   }
-
-  const radius = 12 + Math.random() * 18;
-
   const settings = getElementSettings();
   if (settings.shape === "circle") {
-    canvasElements.push(new Circle(x, y, settings.colorInput, radius));
+    canvasElements.push(new Circle(x, y, settings.color, settings.radius));
   } else if (settings.shape === "photo") {
     canvasElements.push(new Photo(x, y, "/dvd-logo.png", 150, 100));
   }
@@ -120,6 +132,19 @@ canvas.addEventListener("mousemove", (e) => {
     if (canvasElements[i].isSelected(x, y)) {
       isHoveringElement = true;
       break;
+    }
+  }
+});
+
+selectTypeInput.addEventListener("change", (event: Event) => {
+  if (event.target instanceof HTMLSelectElement) {
+    const value = event.target.value;
+    if (value === "photo") {
+      colorPicker.classList.add("hidden");
+      radiusInput.classList.add("hidden");
+    } else if (value === "circle") {
+      colorPicker.classList.remove("hidden");
+      radiusInput.classList.remove("hidden");
     }
   }
 });

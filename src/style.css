@@ -60,10 +60,6 @@ body {
   background-color: #4d4d4d;
 }
 
-/* .hidden {
-  opacity: 0;
-} */
-
 .menu-btn {
   cursor: pointer;
   background: transparent;
@@ -141,4 +137,8 @@ body {
   background: transparent;
   border-radius: 1rem;
   width: 35px;
+}
+
+.hidden {
+  display: none;
 }
