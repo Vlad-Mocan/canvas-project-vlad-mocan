@@ -2,12 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Canvas</title>
   </head>
   <body>
-    <main id="app">
+    <main>
       <canvas id="canvas"></canvas>
     </main>
 
@@ -25,13 +25,13 @@
       </svg>
     </button>
 
-    <div class="information">
+    <section class="information">
       <h3>Window State</h3>
       <p>Viewport: <span id="dim-val">0 x 0</span></p>
       <p>Logo Pos: <span id="logo-val">0, 0</span></p>
 
       <button class="animation-btn">Pause Animation</button>
-    </div>
+    </section>
 
     <button class="arrow-btn">
       <svg
@@ -45,8 +45,7 @@
       </svg>
     </button>
 
-    <div class="controls">
-      <button class="pause-all">Pause All Elements</button>
+    <section class="controls">
       <form class="configure-shapes">
         <label for="type-of-element">Select your preffered element: </label>
         <select id="type-of-element">
@@ -57,7 +56,9 @@
         <input type="color" id="color-picker" />
         <input type="number" min="1" max="500" id="radius-input" />
       </form>
-    </div>
+      <button class="pause-all">Pause All Elements</button>
+    </section>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

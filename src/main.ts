@@ -1,28 +1,33 @@
+import "./style.css";
+import {
+  animationButton,
+  arrowButton,
+  canvas,
+  colorPicker,
+  controlsMenu,
+  dimSpan,
+  informationContainer,
+  logoSpan,
+  menuButton,
+  pauseAllAnimationsButton,
+  radiusInput,
+  selectTypeInput,
+} from "./dom/elements";
 import type { CanvasObject } from "./shapes/CanvasObject";
 import { Circle } from "./shapes/implementation/Circle";
 import { Photo } from "./shapes/implementation/Photo";
-import "./style.css";
-
-const logoSpan = document.querySelector<HTMLSpanElement>("#logo-val")!;
-const dimSpan = document.querySelector<HTMLSpanElement>("#dim-val")!;
-const canvas = document.querySelector<HTMLCanvasElement>("#canvas")!;
-const animationButton =
-  document.querySelector<HTMLButtonElement>(".animation-btn")!;
-const menuButton = document.querySelector<HTMLButtonElement>(".menu-btn")!;
-const informationContainer =
-  document.querySelector<HTMLDivElement>(".information")!;
-const arrowButton = document.querySelector<HTMLButtonElement>(".arrow-btn")!;
-const controlsMenu = document.querySelector<HTMLDivElement>(".controls")!;
-const pauseAllAnimationsButton =
-  document.querySelector<HTMLButtonElement>(".pause-all")!;
-const selectTypeInput =
-  document.querySelector<HTMLSelectElement>("#type-of-element")!;
-const colorPicker = document.querySelector<HTMLInputElement>("#color-picker")!;
-const radiusInput = document.querySelector<HTMLInputElement>("#radius-input")!;
+import { drawSelectionEffect, getElementSettings } from "./lib/renderer";
 
 const ctx = canvas.getContext("2d")!;
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+const canvasElements: CanvasObject[] = [];
+let selectedElement: CanvasObject | null = null;
+let isHoveringElement = false;
+let savedVelocityX = 3;
+let savedVelocityY = 2;
 
 menuButton.addEventListener("click", () => {
   informationContainer.classList.toggle("active");
@@ -32,67 +37,6 @@ arrowButton.addEventListener("click", () => {
   controlsMenu.classList.toggle("active");
   arrowButton.classList.toggle("active");
 });
-
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  dimSpan.textContent = `${window.innerWidth} x ${window.innerHeight}`;
-});
-
-const canvasElements: CanvasObject[] = [];
-let selectedElement: CanvasObject | null = null;
-let isHoveringElement = false;
-let savedVelocityX = 3;
-let savedVelocityY = 2;
-
-const getElementSettings = () => {
-  const shapeInput =
-    document.querySelector<HTMLInputElement>("#type-of-element")!;
-
-  const defaultRadius = 12 + Math.random() * 18;
-
-  if (radiusInput.valueAsNumber > 300) {
-    radiusInput.valueAsNumber = 300;
-  } else if (
-    radiusInput.valueAsNumber < 1 ||
-    radiusInput.valueAsNumber === null
-  ) {
-    radiusInput.valueAsNumber = 1;
-  }
-
-  return {
-    shape: shapeInput.value,
-    color: colorPicker.value || "#000",
-    radius: radiusInput.valueAsNumber || defaultRadius,
-  };
-};
-
-const drawSelectionEffect = (
-  ctx: CanvasRenderingContext2D,
-  el: CanvasObject,
-) => {
-  ctx.save();
-
-  ctx.shadowColor = "rgba(0, 150, 255, 0.9)";
-  ctx.shadowBlur = 18;
-
-  if (el instanceof Circle) {
-    ctx.beginPath();
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = "#00A2FF";
-    ctx.setLineDash([6, 4]);
-    ctx.arc(el.x, el.y, el.radius + 6, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.closePath();
-  } else if (el instanceof Photo) {
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = "#00A2FF";
-    ctx.setLineDash([6, 4]);
-    ctx.strokeRect(el.x - 3, el.y - 3, el.width + 6, el.height + 6);
-  }
-
-  ctx.restore();
-};
 
 canvas.addEventListener("click", (e) => {
   const rect = canvas.getBoundingClientRect();
